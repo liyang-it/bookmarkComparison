@@ -1,22 +1,34 @@
-// express NodeWeb框架 ！ 这个文件主要处理接口 Api请求
+// express NodeWeb框架 ！ 这个路由文件主要处理接口 Api请求
 const express = require('express');
-const app = express();
-
-// 跨域支持 官方文档：https://github.com/expressjs/cors
-const cors = require('cors')
-
-// 开启所有请求都支持跨域
-app.use(cors())
-app.use(express.json());
+const app = express.Router();
 
 // axios 请求工具
 const axios = require('axios')
 
+
+// 处理 / 根请求
+app.get('/', (req, res) => {
+
+    // __dirname 获取到的是当前文件所在目录的绝对路径，因为html文件在 项目根目录的 public，如果需要截取舍弃当前目录路径(也就是获取项目绝对路径根目录)
+
+    const dirname = __dirname + ''
+
+    const filePath = dirname.substring(0, dirname.lastIndexOf('\\')) + '/public/pages/index.html';
+
+    res.sendFile(filePath);
+});
+
+
 // 处理 POST 请求 ，接受 JSON 参数并返回相同的 JSON 参数
 app.post('/checkLinks', async (req, res) => {
+    if (req.body == undefined) {
+        res.json({ status: '请求异常，原因 请求体参数 为空' })
+        return
+    }
     const links = req.body.links;
     if (links == null || links == undefined) {
         res.json({ status: '请求异常，原因 links 为空' });
+        return
     }
 
     try {
@@ -46,33 +58,5 @@ app.post('/checkLinks', async (req, res) => {
     }
 });
 
-/**
- * 使用回调函数执行请求指定链接
- * @param {*} link 链接
- * @returns 返回一个回调函数
- */
-async function processData(link) {
-    // 这里模拟数据处理，你可以根据实际需求进行更复杂的处理
-    return await new Promise((resolve) => {
-
-        axios.get(link).then((res) => {
-            console.info('执行成功', res.status)
-        }).catch((error) => {
-            console.info('执行失败', error)
-            resolve(link);
-        })
-    });
-}
-
-/**
- * 提供一个数组，请求这个数组所有链接并且返回一个回调函数
- * @param {*} dataArray 链接数组
- * @returns 返回一个回调函数
- */
-async function processAllData(dataArray) {
-    const promises = dataArray.map((item) => processData(item));
-
-    return await Promise.all(promises);
-}
-
+// 导出路由模块
 module.exports = app
