@@ -35,7 +35,7 @@ service.interceptors.response.use(
   error => {
     Notification.error({
       title: '错误',
-      message: '网路连接异常',
+      message: error.message,
       duration: duration
     })
     return Promise.reject(error)

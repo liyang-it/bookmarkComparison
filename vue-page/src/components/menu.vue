@@ -34,7 +34,7 @@ export default {
           path: '/github',
           title: '源码地址',
           isToLink: true,
-          link: 'https://github.com/liyang-it'
+          link: 'https://github.com/liyang-it/bookmarkComparison'
         }
       ],
       activeIndex: 'index'
@@ -72,26 +72,32 @@ export default {
     updatePageInfo () {
       // 根据当前页面路径选中对应菜单 default-active
       const currentPath = this.$route.path
+      if (currentPath === '/') {
+        document.title = '书签工具 - 书签有效性检测'
+        this.activeIndex = 'index'
+      } else {
+        const currentName = currentPath.replace('/', '')
 
-      const currentName = currentPath.replace('/', '')
+        // 更改页面标题
+        const find = this.menuItems.find((item) => item.name === currentName)
+        document.title = '书签工具 - ' + find.title
 
-      // 更改页面标题
-      const find = this.menuItems.find((item) => item.name === currentName)
-      document.title = '书签工具 - ' + find.title
-
-      // 去掉路径的 /, 如果路径有很多层 例如 /page/page1 等的话，就不能这样操作了，这个主要就是选中菜单，根据需求实现就好了
-      this.activeIndex = currentName
+        // 去掉路径的 /, 如果路径有很多层 例如 /page/page1 等的话，就不能这样操作了，这个主要就是选中菜单，根据需求实现就好了
+        this.activeIndex = currentName
+      }
     }
   },
   // 生命周期 - 创建完成（可以访问当前this实例）
   created () {
-    this.updatePageInfo()
+
   },
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted () {
-
+    this.updatePageInfo()
   },
-  beforeCreate () {}, // 生命周期 - 创建之前
+  beforeCreate () {
+
+  }, // 生命周期 - 创建之前
   beforeMount () {}, // 生命周期 - 挂载之前
   beforeUpdate () {}, // 生命周期 - 更新之前
   updated () {}, // 生命周期 - 更新之后

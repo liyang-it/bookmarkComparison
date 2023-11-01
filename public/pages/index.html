@@ -11,20 +11,21 @@
 
 <body>
     <div>
-        <h1>书签有效性检测</h1>
+        <h1>书签有效性检测 - 服务端</h1>
         当看到这个页面时,这个服务已经成功运行起来了~
-        <a href="https://github.com/liyang-it/bookmarkComparison" target="_blank">代码地址</a>
+        <a href="https://github.com/liyang-it/bookmarkComparison" target="_blank">源码仓库地址</a>
     </div>
     <div class="api-div">
         <h3>检测链接是否有效</h3>
-        <p>接口地址：<strong>/test</strong></p>
+        <p>UI地址：<a href="https://github.com/liyang-it/bookmarkComparison" target="_blank">客户端</a></p>
+        <p>接口地址：<strong>/api/checkLinks</strong></p>
         <p>请求方式：<strong>POST</strong></p>
         <p>参数：<strong>links</strong> 检测链接列表</p>
         <p>示例：</p>
         <pre>
             {
                 "links": [
-                    "https://www.chtml.cn/"
+                    "https://www.baidu.com123213/"
                 ]
             }
         </pre>
@@ -32,7 +33,7 @@
         <pre>
             [    
                 {
-                    "url": "https://developers.weixin.qq.com/framework/config.html#%E9%A1%B5%E9%9D%A2%E9%85%8D%E7%BD%AE",
+                    "url": "https://www.baidu.com123213/",
                     "status": "error"
                 }
             ]
